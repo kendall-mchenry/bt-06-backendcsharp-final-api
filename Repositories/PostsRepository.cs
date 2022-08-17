@@ -15,7 +15,7 @@ public class PostsRepository : IPostsRepository
     public Post CreatePost(Post newPost)
     {
         // Do I need to add anything in here that links the User data to the post?
-        
+
         _context.Posts.Add(newPost);
         _context.SaveChanges();
         return newPost;
@@ -59,11 +59,6 @@ public class PostsRepository : IPostsRepository
         return _context.Posts.SingleOrDefault(p => p.PostId == postId);
     }
 
-    // GET / one post by user id
-    // public Post? GetPostByUserId(int userId)
-    // {
-    //     throw new NotImplementedException();
-    // }
 
     // GET / ALL posts by user id
     public List<Post>? GetPostsByUserId(int userId)

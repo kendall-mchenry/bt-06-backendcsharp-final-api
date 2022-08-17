@@ -29,5 +29,25 @@ public class AuthController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost]
+    [Route("signin")]
+    public ActionResult<string> SignIn(SignInRequest request)
+    {
+        // Since we're passing in the model as a parameter instead of strings, which method of validating the request data is correct/better?
+        if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password) || request == null || !ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        var token = _authService.SignIn(request);
+
+        if (string.IsNullOrWhiteSpace(token) || token == null)
+        {
+            return Unauthorized();
+        }
+
+        return Ok(token);
+    }
+
     
 }

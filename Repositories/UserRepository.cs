@@ -1,3 +1,4 @@
+using bcrypt = BCrypt.Net.BCrypt;
 using final_api.Migrations;
 using final_api.Models;
 
@@ -12,15 +13,19 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    // PUT / edit user by 
+    // PUT / edit user by user id
     public User? EditUser(User editUser)
     {
         var originalUser = _context.Users.Find(editUser.UserId);
 
         if (originalUser != null) {
             originalUser.Username = editUser.Username;
-            // Do we want users to be able to edit their password?
+            
+            // Do we want users to be able to edit their password? If so, HOW?
             originalUser.Password = editUser.Password;
+            // var passwordHash = bcrypt.HashPassword(originalUser.Password);
+            // originalUser.Password = passwordHash;
+            
             originalUser.FirstName = editUser.FirstName;
             originalUser.LastName = editUser.LastName;
             originalUser.State = editUser.State;

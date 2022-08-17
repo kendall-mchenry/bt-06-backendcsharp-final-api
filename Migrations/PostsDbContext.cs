@@ -36,7 +36,6 @@ public class PostsDbContext : DbContext
             entity.Property(e => e.Password).IsRequired();
             entity.Property(e => e.FirstName);
             entity.Property(e => e.LastName);
-            entity.Property(e => e.City);
             entity.Property(e => e.State);
             entity.Property(e => e.PhotoUrl);
         });

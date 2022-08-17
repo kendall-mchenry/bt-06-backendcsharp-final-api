@@ -7,9 +7,9 @@ public class Post
     public int PostId { get; set; }
 
     // Do I need to connect this to the user id as a foreign key? (maybe look more into this in the future) -- so that we can connect to the user object and get properties from it (https://docs.microsoft.com/en-us/ef/core/modeling/relationships)
-    public int UserId { get; set; }
     [Required]
-    public User User { get; set; }
+    public int UserId { get; set; }
+    public User? User { get; set; }
     
     public string? Title { get; set; }
 

@@ -14,11 +14,33 @@ public class PostsRepository : IPostsRepository
     // POST / NEW post
     public Post CreatePost(Post newPost)
     {
-        // Do I need to add anything in here that links the User data to the post?
+        // Do I need to add anything in here that links the User data to the post? OR does this happen in the front end by accessing the signed in user in local storage?
+
+        // activeUser = HOW TO FIND SIGNED IN USER?;
+        // createPost.User = activeUser;
+        // createPost.UserId = activeUser.UserId;
+
+        // var tokenHandler = new JwtSecurityTokenHandler();
+        //     var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        //     tokenHandler.ValidateToken(token, new TokenValidationParameters
+        //     {
+        //         ValidateIssuerSigningKey = true,
+        //         IssuerSigningKey = new SymmetricSecurityKey(key),
+        //         ValidateIssuer = false,
+        //         ValidateAudience = false,
+        //         // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+        //         ClockSkew = TimeSpan.Zero
+        //     }, out SecurityToken validatedToken);
+
+        //     var jwtToken = (JwtSecurityToken)validatedToken;
+        //     var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+
+        newPost.PostedDate = DateTime.Now.ToString("MM/dd/yyyy, hh:mm:ss tt");
 
         _context.Posts.Add(newPost);
         _context.SaveChanges();
         return newPost;
+
     }
 
     // DELETE / delete post by id

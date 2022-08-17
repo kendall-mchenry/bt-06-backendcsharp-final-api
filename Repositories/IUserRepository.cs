@@ -10,5 +10,8 @@ public interface IUserRepository
 
     User? EditUser(User editUser);
 
+    // Only adding this to clean up my user data
+    void DeleteUserById(int userId);
+
     // Add anything here about getting the posts for a user?
 }

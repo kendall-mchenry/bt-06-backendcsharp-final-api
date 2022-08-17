@@ -1,5 +1,7 @@
 using final_api.Models;
 using final_api.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace final_api.Controllers;
@@ -20,6 +22,7 @@ public class PostsController : ControllerBase
 
     // POST / create new post
     [HttpPost]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Post> CreateNewPost(Post createPost)
     {
         if (!ModelState.IsValid || createPost == null) {
@@ -28,6 +31,9 @@ public class PostsController : ControllerBase
 
         var newPost = _postRepository.CreatePost(createPost);
         return Created(nameof(GetPostById), newPost);
+
+        // HOW TO MAKE SURE THIS IS CONNECTED TO THE SIGNED IN USER?
+        // basically make createPost.UserId = signed in user's user id?
     }
     
     // GET one post by post id
@@ -68,6 +74,7 @@ public class PostsController : ControllerBase
     // PUT / edit post by post id
     [HttpPut]
     [Route("{postId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Post> EditPost(Post editPost)
     {
         if (!ModelState.IsValid || editPost == null) {
@@ -80,6 +87,7 @@ public class PostsController : ControllerBase
     // DELETE / post by post id
     [HttpDelete]
     [Route("{postId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult DeletePost(int postId)
     {
         _postRepository.DeletePostById(postId);

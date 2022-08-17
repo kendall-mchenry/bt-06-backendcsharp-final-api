@@ -16,6 +16,7 @@ public class UserRepository : IUserRepository
     // PUT / edit user by user id
     public User? EditUser(User editUser)
     {
+        // THIS ISN'T WORKING, WHY?
         var originalUser = _context.Users.Find(editUser.UserId);
 
         if (originalUser != null) {
@@ -46,5 +47,16 @@ public class UserRepository : IUserRepository
     public User? GetUserById(int userId)
     {
         return _context.Users.SingleOrDefault(u => u.UserId == userId);
+    }
+
+    // DELETE / one user by use id (to help clean up data)
+    public void DeleteUserById(int userId)
+    {
+        var user = _context.Users.Find(userId);
+
+        if (user != null) {
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
     }
 }

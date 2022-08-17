@@ -1,6 +1,8 @@
 using final_api.Repositories;
 using final_api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace final_api.Controllers;
 
@@ -41,6 +43,7 @@ public class UsersController : ControllerBase
     // PUT / edit user by user id
     [HttpPut]
     [Route("{userId:int}")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<User> EditUser(User editUser)
     {
         if (!ModelState.IsValid || editUser == null) {
@@ -48,5 +51,14 @@ public class UsersController : ControllerBase
         }
 
         return Ok(_userRepository.EditUser(editUser));
+    }
+
+    // DELETE / user by user id (to clean up data)
+    [HttpDelete]
+    [Route("{userId:int}")]
+    public ActionResult DeleteUser(int userId)
+    {
+        _userRepository.DeleteUserById(userId);
+        return NoContent();
     }
 }

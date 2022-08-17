@@ -16,6 +16,6 @@ public class Post
     [Required]
     public string? Content { get; set; }
     
-    public DateTime PostedDate { get; set; }
+    public string? PostedDate { get; set; }
 
 }

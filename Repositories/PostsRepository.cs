@@ -1,5 +1,8 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using final_api.Migrations;
 using final_api.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace final_api.Repositories;
 
@@ -35,6 +38,7 @@ public class PostsRepository : IPostsRepository
         //     var jwtToken = (JwtSecurityToken)validatedToken;
         //     var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
+        
         newPost.PostedDate = DateTime.Now.ToString("MM/dd/yyyy, hh:mm:ss tt");
 
         _context.Posts.Add(newPost);

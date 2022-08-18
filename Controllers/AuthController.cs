@@ -1,6 +1,8 @@
 using final_api.Repositories;
 using final_api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace final_api.Controllers;
 
@@ -12,11 +14,12 @@ public class AuthController : ControllerBase
 
     private readonly IAuthService _authService;
 
-    public AuthController(ILogger<AuthController> logger, IAuthService service) {
+    public AuthController(ILogger<AuthController> logger, IAuthService service, IUserRepository userRepository) {
         _logger = logger;
         _authService = service;
     }
 
+    // POST / create a new user
     [HttpPost]
     [Route("register")]
     public ActionResult CreateNewUser(User user)
@@ -29,6 +32,7 @@ public class AuthController : ControllerBase
         return NoContent();
     }
 
+    // POST / using response to sign in
     [HttpPost]
     [Route("signin")]
     public ActionResult<string> SignIn(SignInRequest request)

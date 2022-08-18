@@ -1,6 +1,7 @@
 using bcrypt = BCrypt.Net.BCrypt;
 using final_api.Migrations;
 using final_api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace final_api.Repositories;
 
@@ -16,7 +17,6 @@ public class UserRepository : IUserRepository
     // PUT / edit user by user id
     public User? EditUser(User editUser)
     {
-        // THIS ISN'T WORKING, WHY?
         var originalUser = _context.Users.Find(editUser.UserId);
 
         if (originalUser != null) {
@@ -49,7 +49,8 @@ public class UserRepository : IUserRepository
         return _context.Users.SingleOrDefault(u => u.UserId == userId);
     }
 
-    // DELETE / one user by use id (to help clean up data)
+    // FOR TESTING PURPOSE ONLY (as of right now)
+    // DELETE / one user by use id
     public void DeleteUserById(int userId)
     {
         var user = _context.Users.Find(userId);
@@ -59,4 +60,14 @@ public class UserRepository : IUserRepository
             _context.SaveChanges();
         }
     }
+
+    // PRETTY SURE I DON'T KNOW WHAT THIS IS DOING SO IDK WHY I NEED IT
+    // Referencing: https://docs.microsoft.com/en-us/ef/core/querying/related-data/eager
+    // GET / user and related posts
+    // public List<User> GetUserPosts(User user)
+    // {
+    //     var userPosts = _context.Users.Include(user => user.Posts).ToList();
+
+    //     return userPosts;
+    // }
 }

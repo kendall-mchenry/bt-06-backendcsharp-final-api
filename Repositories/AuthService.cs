@@ -24,6 +24,8 @@ public class AuthService : IAuthService
         var passwordHash = bcrypt.HashPassword(user.Password);
         user.Password = passwordHash;
 
+        user.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy, hh:mm:ss tt");
+
         _context.Add(user);
         _context.SaveChanges();
         return user;
@@ -57,6 +59,7 @@ public class AuthService : IAuthService
         var claims = new Claim[]
         {
         new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
+        new Claim("UserId", user.UserId.ToString()),
         new Claim(JwtRegisteredClaimNames.UniqueName, user.Username ?? ""),
         new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
         new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? "")
@@ -73,4 +76,7 @@ public class AuthService : IAuthService
 
         return encodedJwt;
     }
+
+    // SIGN OUT METHOD? --OR-- is this done on the frontend to forget the token?
+    // https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6
 }

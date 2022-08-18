@@ -22,9 +22,24 @@ public class PostsController : ControllerBase
 
     // POST / create new post
     [HttpPost]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Post> CreateNewPost(Post createPost)
     {
+        // IS THIS RIGHT?
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        
+        var userId = Int32.Parse(userIdClaim.Value);
+
+        if (userId == null) {
+            return Unauthorized();
+        }
+
+        createPost.UserId = userId;
+
         if (!ModelState.IsValid || createPost == null) {
             return BadRequest();
         }
@@ -32,8 +47,6 @@ public class PostsController : ControllerBase
         var newPost = _postRepository.CreatePost(createPost);
         return Created(nameof(GetPostById), newPost);
 
-        // HOW TO MAKE SURE THIS IS CONNECTED TO THE SIGNED IN USER?
-        // basically make createPost.UserId = signed in user's user id?
     }
     
     // GET one post by post id
@@ -57,11 +70,38 @@ public class PostsController : ControllerBase
         return Ok(_postRepository.GetAllPosts());
     }
 
-    // GET ALL posts by user id
+    // GET ALL posts by user id (for others to view the user page)
     [HttpGet]
     [Route("user/{userId:int}")]
     public ActionResult<IEnumerable<Post>> GetPostsByUserId(int userId)
     {
+        var userPosts = _postRepository.GetPostsByUserId(userId);
+
+        if (userPosts == null) {
+            return NotFound();
+        }
+        
+        return Ok(userPosts);
+    }
+
+    // GET / ALL current user posts
+    [HttpGet]
+    [Route("user/current")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public ActionResult<IEnumerable<Post>> GetCurrentUserPosts(int userId)
+    {
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        
+        userId = Int32.Parse(userIdClaim.Value);
+
+        if (userId == null) {
+            return Unauthorized();
+        }
+
         var userPosts = _postRepository.GetPostsByUserId(userId);
 
         if (userPosts == null) {

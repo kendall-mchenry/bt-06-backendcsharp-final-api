@@ -6,7 +6,7 @@ namespace final_api.Models;
 
 public class User 
 {
-    [JsonIgnore]
+   // [JsonIgnore]
     public int UserId { get; set; }
 
     [Required]
@@ -24,7 +24,7 @@ public class User
     // OPTIONAL -- want to see if I can connect this to the individual posts (later)
     public string? PhotoUrl { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    public string? CreatedDate { get; set; }
     
     [JsonIgnore]
     public List<Post>? Posts { get; set; }

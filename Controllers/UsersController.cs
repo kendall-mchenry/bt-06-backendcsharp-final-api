@@ -74,18 +74,32 @@ public class UsersController : ControllerBase
     // SHOULD I MAKE IT SO A USER CAN UPDATE THEIR PASSWORD?
     // PUT / edit user by user id
     [HttpPut]
-    // [Route("current")]
-    [Route("{userId:int}")] // is the user Id needed for the client?
+    [Route("current/edit")] // OR combo of these two?
+    // [Route("{userId:int}")] // is the user Id needed for the client?
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<User> EditUser(User editUser)
     {
         // Does this need additional authentication so ONLY the signed in user can edit their details? -OR- will this only be accessible by the user that's signed in anyway? 
 
+        // THIS WORKS BUT IDK IF IT'S RIGHT?!
+
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        
+        var userId = Int32.Parse(userIdClaim.Value);
+
         if (!ModelState.IsValid || editUser == null) {
             return BadRequest();
         }
 
-        return Ok(_userRepository.EditUser(editUser));
+        if (userId == editUser.UserId) {
+            return Ok(_userRepository.EditUser(editUser));
+        } else {
+            return Unauthorized();
+        }       
     }
 
 

@@ -23,8 +23,8 @@ public class PostsDbContext : DbContext
             entity.HasKey(e => e.PostId);
             // Not sure if this is right of if I just need the WithMany() without the foreign key?
             entity.HasOne(e => e.User).WithMany(p => p.Posts).HasForeignKey(e => e.UserId).IsRequired();
-            entity.Property(e => e.Title);
-            entity.Property(e => e.Content).IsRequired();
+            entity.Property(e => e.Title).HasMaxLength(50);
+            entity.Property(e => e.Content).IsRequired().HasMaxLength(280);
             entity.Property(e => e.PostedDate);
         });
     
@@ -36,7 +36,7 @@ public class PostsDbContext : DbContext
             entity.Property(e => e.Password).IsRequired();
             entity.Property(e => e.FirstName);
             entity.Property(e => e.LastName);
-            entity.Property(e => e.State);
+            entity.Property(e => e.State).HasMaxLength(2);
             entity.Property(e => e.PhotoUrl);
         });
     }

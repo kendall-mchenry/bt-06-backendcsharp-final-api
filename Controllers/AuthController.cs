@@ -21,7 +21,7 @@ public class AuthController : ControllerBase
 
     // POST / create a new user
     [HttpPost]
-    [Route("register")]
+    [Route("signup")]
     public ActionResult CreateNewUser(User user)
     {
         if (user == null || !ModelState.IsValid) {

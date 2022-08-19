@@ -113,15 +113,29 @@ public class PostsController : ControllerBase
 
     // PUT / edit post by post id
     [HttpPut]
-    [Route("{postId:int}")]
+    [Route("edit/{postId:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Post> EditPost(Post editPost)
     {
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        
+        var userId = Int32.Parse(userIdClaim.Value);
+        
         if (!ModelState.IsValid || editPost == null) {
             return BadRequest();
         }
 
-        return Ok(_postRepository.EditPost(editPost));
+        if (userId == editPost.UserId) {
+            return Ok(_postRepository.EditPost(editPost));
+        } else {
+            return Unauthorized();
+        }
+
+        // return Ok(_postRepository.EditPost(editPost));
     }
 
     // DELETE / post by post id
@@ -130,8 +144,25 @@ public class PostsController : ControllerBase
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult DeletePost(int postId)
     {
-        _postRepository.DeletePostById(postId);
-        return NoContent();
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        
+        var userId = Int32.Parse(userIdClaim.Value);
+
+        var deletePost = _postRepository.GetPostByPostId(postId);
+
+        if (userId == deletePost.UserId) {
+            _postRepository.DeletePostById(postId);
+            return NoContent();
+        } else {
+            return Unauthorized();
+        }
+        
+        // _postRepository.DeletePostById(postId);
+        // return NoContent();
     }
 
 

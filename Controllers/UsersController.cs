@@ -84,7 +84,7 @@ public class UsersController : ControllerBase
         // THIS WORKS BUT IDK IF IT'S RIGHT?!
 
         if (HttpContext.User == null) {
-            return Unauthorized();
+            return Unauthorized("Unable to find user, returns null");
         }
         
         var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId");
@@ -98,7 +98,7 @@ public class UsersController : ControllerBase
         if (userId == editUser.UserId) {
             return Ok(_userRepository.EditUser(editUser));
         } else {
-            return Unauthorized();
+            return Unauthorized("Not current user, can't edit");
         }       
     }
 

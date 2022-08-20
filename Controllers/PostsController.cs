@@ -25,7 +25,6 @@ public class PostsController : ControllerBase
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<Post> CreateNewPost(Post createPost)
     {
-        // IS THIS RIGHT?
         if (HttpContext.User == null) {
             return Unauthorized();
         }

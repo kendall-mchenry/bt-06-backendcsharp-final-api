@@ -23,9 +23,12 @@ public class UserRepository : IUserRepository
             originalUser.Username = editUser.Username;
             
             // Do we want users to be able to edit their password? If so, HOW?
-            originalUser.Password = editUser.Password;
+            // This is working, BUT it's also re-hashing the pw each update. Does that matter? Performance?
+            // originalUser.Password = editUser.Password;
             // var passwordHash = bcrypt.HashPassword(originalUser.Password);
             // originalUser.Password = passwordHash;
+            
+            // Just don't include the password option?
             
             originalUser.FirstName = editUser.FirstName;
             originalUser.LastName = editUser.LastName;
@@ -36,6 +39,7 @@ public class UserRepository : IUserRepository
 
         return originalUser;
     }
+
 
     // GET / ALL users
     public IEnumerable<User> GetAllUsers()

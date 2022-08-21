@@ -52,3 +52,12 @@
 /Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/obj/Debug/net6.0/final-api.pdb
 /Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/obj/Debug/net6.0/final-api.genruntimeconfig.cache
 /Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/obj/Debug/net6.0/ref/final-api.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/BCrypt.Net-Next.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/Users/kendall.mchenry/Desktop/Bethel-Tech/06-backend-dotnet/final-project/final-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

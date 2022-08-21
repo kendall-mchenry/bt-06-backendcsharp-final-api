@@ -24,7 +24,7 @@ public class AuthService : IAuthService
         var passwordHash = bcrypt.HashPassword(user.Password);
         user.Password = passwordHash;
 
-        user.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy, hh:mm:ss tt");
+        user.CreatedDate = DateTime.Now.ToString("MM/dd/yyyy");
 
         _context.Add(user);
         _context.SaveChanges();
